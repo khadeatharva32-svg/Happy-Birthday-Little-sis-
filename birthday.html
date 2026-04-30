@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sis! 🎂</title>
+    <style>
+        :root {
+            --primary-pink: #ff85a2;
+            --soft-purple: #a29bfe;
+            --gold: #f1c40f;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fce4ec, #f3e5f5);
+            color: #444;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: var(--primary-pink);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .subtext {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--soft-purple);
+        }
+
+        /* The Surprise Box */
+        .gift-container {
+            margin: 50px 0;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gift-container:hover {
+            transform: scale(1.1);
+        }
+
+        .gift-box {
+            font-size: 100px;
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Message Card */
+        .message-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 20px;
+            text-align: center;
+            border: 2px dashed var(--primary-pink);
+        }
+
+        /* Photo Placeholder */
+        .photo-frame {
+            width: 250px;
+            height: 250px;
+            background: #eee;
+            border: 8px solid white;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+
+        .btn {
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #ff5c81;
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <section class="hero">
+        <!-- Replace the src with a picture of your sister -->
+        <img src="https://via.placeholder.com/250" alt="Sister's Photo" class="photo-frame">
+        <h1>Happy Birthday, Lil Sis! 🎈</h1>
+        <p class="subtext">To the world's best (and most annoying) sister!</p>
+        
+        <div class="gift-container" onclick="revealSurprise()">
+            <div class="gift-box" id="gift">🎁</div>
+            <p>Click the gift!</p>
+        </div>
+    </section>
+
+    <div class="message-card" id="message" style="display:none;">
+        <h2>My Wish For You ✨</h2>
+        <p>
+            Hey Little sis! I hope your day is filled with as much joy as you bring (and as much cake as you can eat). 
+            Watching you grow up is my favorite thing. Always stay as bright and bold as you are today!
+        </p>
+        <p><strong>- Your Favorite Sibling</strong></p>
+        <button class="btn" onclick="playMusic()">Turn on the Party Vibes! 🎵</button>
+    </div>
+
+    <!-- Hidden Audio - Replace URL with a link to a birthday song mp3 if you have one -->
+    <audio id="birthday-song" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        function revealSurprise() {
+            // Change the gift icon
+            document.getElementById('gift').innerHTML = '🎂';
+            
+            // Show the message card
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
+
+            // Fire confetti
+            var duration = 5 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff85a2', '#a29bfe', '#f1c40f']
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff85a2', '#a29bfe', '#f1c40f']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        function playMusic() {
+            var audio = document.getElementById("birthday-song");
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+    </script>
+</body>
+</html>
